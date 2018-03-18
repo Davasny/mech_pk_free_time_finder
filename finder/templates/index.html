@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Znajdź czas w planie zajęć</title>
+    <meta name="author" content="Davasny">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/selectize.bootstrap3.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/query-builder.default.css') }}">
+
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/selectize.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/query-builder.standalone.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/query-builder.pl.js') }}"></script>
+
+</head>
+
+<body>
+    <div id="container">
+        <div class="main-container">
+            <div class="bg-light col-sx-12 col-sm-12 col-md-4 col-lg-4 filter">
+                <h3>Filtr</h3>
+                <div id="builder"></div>
+                <button type="button" id="send_query" class="btn btn-success pull-right">Szukaj</button>
+
+                <footer>
+                    Created by <a href="https://github.com/Davasny/">Davasny</a>
+                </footer>
+            </div>
+
+            <div class="col-sx-12 col-sm-12 col-lg-8 col-md-8 week-timetables-box">
+                <div id="week_view" class="timetable-box col-md-12">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

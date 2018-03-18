@@ -1,0 +1,37 @@
+{%- for week_type in timetable_by_weeks %}
+    {%- if week_type == "-p" %}
+    <h3>Parzysty</h3>
+    <div id="week-p-box">
+    {%- else %}
+    <h3>Nieparzysty</h3>
+    <div id="week-n-box">
+    {%- endif %}
+        <table id="table-week{{ week_type }}" class="table table-bordered table-condensed ">
+            <thead>
+                <tr>
+                    <th></th>
+                    {%- for day_num, val in days.items() %}
+                        <th>{{ val }}</th>
+                    {%- endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {%- for hour in hours %}
+                <tr>
+                    <td>{{ hour }}</td>
+                    {%- for day_num, val in days.items() %}
+                        {%- if timetable_by_weeks[week_type][day_num][hour]|length > 0 %}
+                            <td>
+                            {%- for lesson in timetable_by_weeks[week_type][day_num][hour] %}
+                                {{ lesson['subject'] }} - {{ lesson['classroom'] }}
+                            {%- endfor %}
+                            </td>
+                        {%- else %}
+                            <td></td>
+                        {%- endif %}
+                    {%- endfor %}
+                {%- endfor %}
+            </tbody>
+        </table>
+    </div>
+{%- endfor %}
