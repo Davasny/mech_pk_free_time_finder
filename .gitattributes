@@ -1,2 +1,7 @@
 finder/static/js/* linguist-vendored
 script.js linguist-vendored=false
+
+finder/static/css/* linguist-vendored
+style.css linguist-vendored=false
+
+finder/static/fonts/* linguist-vendored
