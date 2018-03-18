@@ -2,7 +2,7 @@ from finder import app, logger
 import re
 
 
-class TimetableData():
+class TimetableData:
     def get_hours(self):
         if 'hours' not in app.timetable:
             logger.debug("Filling hours")
