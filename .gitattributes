@@ -1,0 +1,2 @@
+finder/static/js/* linguist-vendored
+script.js linguist-vendored=false
