@@ -6,6 +6,7 @@ app.add_url_rule('/', endpoint="index")
 
 """ MainHandler """
 app.add_url_rule('/index', view_func=MainHandler.IndexView.as_view('index'))
+app.add_url_rule('/filter', view_func=MainHandler.FilterView.as_view('filter'))
 
 
 """ API Handler """
