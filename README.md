@@ -1,9 +1,9 @@
-#Free time finder for mech.pk.edu.pl
+# Free time finder for mech.pk.edu.pl
 
-###How to run:
+### How to run:
 `python3 runserver.py`
 
-###Used dependencies:
+### Used dependencies:
 ```
 flask
 jinja2
