@@ -10,6 +10,7 @@ class TimetableData():
             for lesson in app.timetable['lessons']:
                 if lesson['hour'] not in app.timetable['hours']:
                     app.timetable['hours'].append(lesson['hour'])
+        sorted(app.timetable['hours'])
         return app.timetable['hours']
 
     def get_teachers(self):
