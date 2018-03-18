@@ -19,7 +19,7 @@ class FilterView(BaseView):
 
                 selected_keywords = re.findall('"(.*?)"', filter)
                 for x in range(len(selected_keywords)):
-                    if selected_keywords[x] == "teacher":
+                    if selected_keywords[x] == "teacher" or selected_keywords[x] == "classroom":
                         filter = filter.replace('"'+selected_keywords[x+1]+'"',
                                                 '{"$regex": "/'+ selected_keywords[x+1] +'/"}')
 
