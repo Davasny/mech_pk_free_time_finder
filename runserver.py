@@ -1,9 +1,27 @@
 from finder import app
 import optparse
-import datetime
+from finder.models.optivum_scraper import OptivumScraper
+from flask_apscheduler import APScheduler
+import os.path
 
 
-def flaskrun(default_host="localhost",
+class Config(object):
+    JOBS = [
+        {
+            'id': 'scraper_job',
+            'func': 'runserver:scraper_job',
+            'trigger': 'interval',
+            'seconds': 3600
+        }
+    ]
+    SCHEDULER_API_ENABLED = True
+
+
+def scraper_job():
+    OptivumScraper("http://aslan.mech.pk.edu.pl/~podzial/stacjonarne/html/")
+
+
+def flask_run(default_host="localhost",
                   default_port="5000"):
 
     parser = optparse.OptionParser()
@@ -21,12 +39,21 @@ def flaskrun(default_host="localhost",
 
     options, _ = parser.parse_args()
 
+    app.config.from_object(Config())
+    scheduler = APScheduler()
+    scheduler.init_app(app)
+    scheduler.start()
+
+    if not os.path.isfile("timetable.json"):
+        scheduler.run_job("scraper_job")
+
     app.run(
         debug=options.debug,
         host=options.host,
         port=int(options.port),
-        threaded=True
+        threaded=True,
     )
 
+
 if __name__ == '__main__':
-    flaskrun()
+    flask_run()
