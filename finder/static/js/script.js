@@ -68,263 +68,253 @@ $(document).ready(function(){
 
 
 
+    var rules_basic = {
+       "condition":"AND",
+       "rules":[
+          {
+             "id":"teacher",
+             "field":"teacher",
+             "type":"string",
+             "input":"text",
+             "operator":"equal",
+             "value":"A.Bednarz"
+          },
+          {
+             "condition":"AND",
+             "rules":[
+                {
+                   "id":"group",
+                   "field":"group",
+                   "type":"string",
+                   "input":"text",
+                   "operator":"equal",
+                   "value":"11A1"
+                },
+                {
+                   "id":"group",
+                   "field":"group",
+                   "type":"string",
+                   "input":"text",
+                   "operator":"equal",
+                   "value":"11A2"
+                },
+                {
+                   "id":"group",
+                   "field":"group",
+                   "type":"string",
+                   "input":"text",
+                   "operator":"equal",
+                   "value":"11A3"
+                }
+             ]
+          },
+          {
+             "condition":"AND",
+             "rules":[
+                {
+                   "id":"classroom",
+                   "field":"classroom",
+                   "type":"string",
+                   "input":"text",
+                   "operator":"equal",
+                   "value":"A123"
+                }
+             ]
+          }
+       ],
+       "valid":true
+    };
 
-var rules_basic = {
-   "condition":"AND",
-   "rules":[
-      {
-         "id":"teacher",
-         "field":"teacher",
-         "type":"string",
-         "input":"text",
-         "operator":"equal",
-         "value":"A.Bednarz"
-      },
-      {
-         "condition":"AND",
-         "rules":[
-            {
-               "id":"group",
-               "field":"group",
-               "type":"string",
-               "input":"text",
-               "operator":"equal",
-               "value":"11A1"
-            },
-            {
-               "id":"group",
-               "field":"group",
-               "type":"string",
-               "input":"text",
-               "operator":"equal",
-               "value":"11A2"
-            },
-            {
-               "id":"group",
-               "field":"group",
-               "type":"string",
-               "input":"text",
-               "operator":"equal",
-               "value":"11A3"
-            }
-         ]
-      },
-      {
-         "condition":"AND",
-         "rules":[
-            {
-               "id":"classroom",
-               "field":"classroom",
-               "type":"string",
-               "input":"text",
-               "operator":"equal",
-               "value":"A123"
-            }
-         ]
+
+    // Fix for Selectize
+    $('#builder').on('afterCreateRuleInput.queryBuilder', function(e, rule) {
+      if (rule.filter.plugin == 'selectize') {
+        rule.$el.find('.rule-value-container').css('min-width', '200px')
+          .find('.selectize-control').removeClass('form-control');
       }
-   ],
-   "valid":true
-};
+    });
 
 
-// Fix for Selectize
-$('#builder').on('afterCreateRuleInput.queryBuilder', function(e, rule) {
-  if (rule.filter.plugin == 'selectize') {
-    rule.$el.find('.rule-value-container').css('min-width', '200px')
-      .find('.selectize-control').removeClass('form-control');
-  }
-});
+    $('#builder').queryBuilder({
+        lang_code: "pl",
+        filters: [
+            {
+                id: 'group',
+                label: 'Grupa',
+                type: 'string',
+                plugin: 'selectize',
+                plugin_config: {
+                    valueField: 'id',
+                    labelField: 'name',
+                    searchField: 'name',
+                    sortField: 'name',
+                    create: true,
+                    maxItems: 1,
+                    onInitialize: function() {
+                        var that = this;
 
+                        JSON.parse(sessionStorage.groups_data).forEach(function(item) {
+                                var tmp = {};
+                                tmp['id'] = item;
+                                tmp['name'] = item;
+                                that.addOption(tmp);
+                            });
+                    }
+                },
+                valueSetter: function(rule, value) {
+                    rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
+                },
+                operators: ['equal', 'not_equal', 'in', 'not_in']
+            },
+            {
+                id: 'teacher',
+                label: 'Wykładowca',
+                type: 'string',
+                plugin: 'selectize',
+                plugin_config: {
+                    valueField: 'id',
+                    labelField: 'name',
+                    searchField: 'name',
+                    sortField: 'name',
+                    create: true,
+                    maxItems: 1,
+                    onInitialize: function() {
+                        var that = this;
 
-
-
-
-$('#builder').queryBuilder({
-    lang_code: "pl",
-    filters: [
-        {
-            id: 'group',
-            label: 'Grupa',
-            type: 'string',
-            plugin: 'selectize',
-            plugin_config: {
-                valueField: 'id',
-                labelField: 'name',
-                searchField: 'name',
-                sortField: 'name',
-                create: true,
-                maxItems: 1,
-                onInitialize: function() {
-                    var that = this;
-
-                    JSON.parse(sessionStorage.groups_data).forEach(function(item) {
+                        JSON.parse(sessionStorage.teachers_data).forEach(function(item) {
                             var tmp = {};
                             tmp['id'] = item;
                             tmp['name'] = item;
                             that.addOption(tmp);
                         });
-                }
-            },
-            valueSetter: function(rule, value) {
-                rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
-            },
-            operators: ['equal', 'not_equal', 'in', 'not_in']
-        },
-        {
-            id: 'teacher',
-            label: 'Wykładowca',
-            type: 'string',
-            plugin: 'selectize',
-            plugin_config: {
-                valueField: 'id',
-                labelField: 'name',
-                searchField: 'name',
-                sortField: 'name',
-                create: true,
-                maxItems: 1,
-                onInitialize: function() {
-                    var that = this;
 
-                    JSON.parse(sessionStorage.teachers_data).forEach(function(item) {
-                        var tmp = {};
-                        tmp['id'] = item;
-                        tmp['name'] = item;
-                        that.addOption(tmp);
-                    });
-
-                }
+                    }
+                },
+                valueSetter: function(rule, value) {
+                    rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
+                },
+                operators: ['equal', 'not_equal', 'in', 'not_in']
             },
-            valueSetter: function(rule, value) {
-                rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
-            },
-            operators: ['equal', 'not_equal', 'in', 'not_in']
-        },
-        {
-            id: 'classroom',
-            label: 'Sala',
-            type: 'string',
-            plugin: 'selectize',
-            plugin_config: {
-                valueField: 'id',
-                labelField: 'name',
-                searchField: 'name',
-                sortField: 'name',
-                create: true,
-                maxItems: 1,
-                onInitialize: function() {
-                    var that = this;
+            {
+                id: 'classroom',
+                label: 'Sala',
+                type: 'string',
+                plugin: 'selectize',
+                plugin_config: {
+                    valueField: 'id',
+                    labelField: 'name',
+                    searchField: 'name',
+                    sortField: 'name',
+                    create: true,
+                    maxItems: 1,
+                    onInitialize: function() {
+                        var that = this;
 
-                    JSON.parse(sessionStorage.classrooms_data).forEach(function(item) {
-                        var tmp = {};
-                        tmp['id'] = item;
-                        tmp['name'] = item;
-                        that.addOption(tmp);
-                    });
+                        JSON.parse(sessionStorage.classrooms_data).forEach(function(item) {
+                            var tmp = {};
+                            tmp['id'] = item;
+                            tmp['name'] = item;
+                            that.addOption(tmp);
+                        });
 
-                }
+                    }
+                },
+                valueSetter: function(rule, value) {
+                    rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
+                },
+                operators: ['equal', 'not_equal']
             },
-            valueSetter: function(rule, value) {
-                rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
-            },
-            operators: ['equal', 'not_equal']
-        },
-        {
-            id: 'hour',
-            label: 'Godzina',
-            type: 'string',
-            plugin: 'selectize',
-            plugin_config: {
-                valueField: 'id',
-                labelField: 'name',
-                searchField: 'name',
-                create: true,
-                maxItems: 1,
-                onInitialize: function() {
-                    var that = this;
+            {
+                id: 'hour',
+                label: 'Godzina',
+                type: 'string',
+                plugin: 'selectize',
+                plugin_config: {
+                    valueField: 'id',
+                    labelField: 'name',
+                    searchField: 'name',
+                    create: true,
+                    maxItems: 1,
+                    onInitialize: function() {
+                        var that = this;
 
-                    JSON.parse(sessionStorage.hours_data).forEach(function(item) {
-                        var tmp = {};
-                        tmp['id'] = item;
-                        tmp['name'] = item;
-                        that.addOption(tmp);
-                    });
-                }
+                        JSON.parse(sessionStorage.hours_data).forEach(function(item) {
+                            var tmp = {};
+                            tmp['id'] = item;
+                            tmp['name'] = item;
+                            that.addOption(tmp);
+                        });
+                    }
+                },
+                valueSetter: function(rule, value) {
+                    rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
+                },
+                operators: ['equal', 'not_equal']
             },
-            valueSetter: function(rule, value) {
-                rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
+            {
+                id: 'subject',
+                label: 'Przedmiot',
+                type: 'string',
+                plugin: 'selectize',
+                plugin_config: {
+                    valueField: 'id',
+                    labelField: 'name',
+                    searchField: 'name',
+                    create: true,
+                    maxItems: 1,
+                    onInitialize: function() {
+                        var that = this;
+
+                        JSON.parse(sessionStorage.subjects_data).forEach(function(item) {
+                            var tmp = {};
+                            tmp['id'] = item;
+                            tmp['name'] = item;
+                            that.addOption(tmp);
+                        });
+                    }
+                },
+                valueSetter: function(rule, value) {
+                    rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
+                },
+                operators: ['equal', 'not_equal', 'in', 'not_in']
             },
-            operators: ['equal', 'not_equal']
-        },
-        {
-            id: 'subject',
-            label: 'Przedmiot',
-            type: 'string',
-            plugin: 'selectize',
-            plugin_config: {
-                valueField: 'id',
-                labelField: 'name',
-                searchField: 'name',
-                create: true,
-                maxItems: 1,
-                onInitialize: function() {
-                    var that = this;
+            {
+                id: 'day',
+                label: 'Dzień',
+                type: 'integer',
+                plugin: 'selectize',
+                plugin_config: {
+                    valueField: 'id',
+                    labelField: 'name',
+                    searchField: 'name',
+                    create: true,
+                    maxItems: 1,
+                    onInitialize: function() {
+                        var that = this;
 
-                    JSON.parse(sessionStorage.subjects_data).forEach(function(item) {
-                        var tmp = {};
-                        tmp['id'] = item;
-                        tmp['name'] = item;
-                        that.addOption(tmp);
-                    });
-                }
-            },
-            valueSetter: function(rule, value) {
-                rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
-            },
-            operators: ['equal', 'not_equal', 'in', 'not_in']
-        },
-        {
-            id: 'day',
-            label: 'Dzień',
-            type: 'integer',
-            plugin: 'selectize',
-            plugin_config: {
-                valueField: 'id',
-                labelField: 'name',
-                searchField: 'name',
-                create: true,
-                maxItems: 1,
-                onInitialize: function() {
-                    var that = this;
+                        var json = JSON.parse(sessionStorage.days_data);
 
-                    var json = JSON.parse(sessionStorage.days_data);
+                        $.each(json, function(key, val) {
+                            var tmp = {};
+                            tmp['id'] = key;
+                            tmp['name'] = val;
+                            that.addOption(tmp);
+                        });
+                    }
+                },
+                valueSetter: function(rule, value) {
+                    rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
+                },
+                operators: ['equal', 'not_equal', 'in', 'not_in']
+            }
+        ],
+        rules: rules_basic
+    });
 
-                    $.each(json, function(key, val) {
-                        var tmp = {};
-                        tmp['id'] = key;
-                        tmp['name'] = val;
-                        that.addOption(tmp);
-                    });
-                }
-            },
-            valueSetter: function(rule, value) {
-                rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
-            },
-            operators: ['equal', 'not_equal', 'in', 'not_in']
-        }
-    ],
-    rules: rules_basic
-});
-
-$("#send_query").click(function() {
-    var filter_query = $('#builder').queryBuilder('getMongo');
-    console.log(JSON.stringify(filter_query));
-    $("#week_view").load("/filter?filter=" + JSON.stringify(filter_query), function() {});
-});
-
-$("#normal").click(function() {
-console.log($('#builder').queryBuilder('getRules'));
-
-});
+    $("#send_query").click(function() {
+        var filter_query = $('#builder').queryBuilder('getMongo');
+        $("#week_view").load("/filter?filter=" + JSON.stringify(filter_query), function() {});
+    });
 
     function show_error(message){
         console.log(message);
