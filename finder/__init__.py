@@ -23,7 +23,7 @@ logger.addHandler(fh)
 logger.addHandler(sh)
 
 
-app = Flask('finder')
+application = app = Flask('finder')
 app.config['SECRET_KEY'] = str(hashlib.sha256(str(time.time()).encode('utf-8')).hexdigest())
 
 app.timetable = {}

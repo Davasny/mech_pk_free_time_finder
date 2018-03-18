@@ -1,4 +1,4 @@
-from finder import app
+from finder import application
 import optparse
 from finder.models.optivum_scraper import OptivumScraper
 from flask_apscheduler import APScheduler
@@ -39,15 +39,15 @@ def flask_run(default_host="localhost",
 
     options, _ = parser.parse_args()
 
-    app.config.from_object(Config())
+    application.config.from_object(Config())
     scheduler = APScheduler()
-    scheduler.init_app(app)
+    scheduler.init_app(application)
     scheduler.start()
 
     if not os.path.isfile("timetable.json"):
         scheduler.run_job("scraper_job")
 
-    app.run(
+    application.run(
         debug=options.debug,
         host=options.host,
         port=int(options.port),
