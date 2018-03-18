@@ -9,7 +9,7 @@ class Config(object):
     JOBS = [
         {
             'id': 'scraper_job',
-            'func': 'runserver:scraper_job',
+            'func': 'application:scraper_job',
             'trigger': 'interval',
             'seconds': 3600
         }
