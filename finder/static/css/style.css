@@ -49,11 +49,18 @@
     background-color: #e4ebff;
 }
 
+#table-week-p > thead > tr > th,
+#table-week-n > thead > tr > th {
+    text-align: center;
+}
+
 .taken{
-    background-color:  #c3c3c3;
+    background: #9e9e9e;
+    color: white;
 }
 .week-timetables-box{
     overflow-y: overlay;
+    text-align: center;
 }
 
 footer {

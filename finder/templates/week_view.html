@@ -21,7 +21,7 @@
                     <td>{{ hour }}</td>
                     {%- for day_num, val in days.items() %}
                         {%- if timetable_by_weeks[week_type][day_num][hour]|length > 0 %}
-                            <td>
+                            <td class="taken">
                             {%- for lesson in timetable_by_weeks[week_type][day_num][hour] %}
                                 {{ lesson['subject'] }} - {{ lesson['classroom'] }}
                             {%- endfor %}
