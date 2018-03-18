@@ -32,3 +32,9 @@ class TimetableClassrooms(BaseView):
     def get(self, *args, **kwargs):
         timetable = TimetableData.TimetableData()
         return json.dumps(timetable.get_classrooms(), ensure_ascii=False)
+
+
+class TimetableWeekDays(BaseView):
+    def get(self, *args, **kwargs):
+        timetable = TimetableData.TimetableData()
+        return json.dumps(timetable.get_week_days(), ensure_ascii=False)

@@ -53,3 +53,10 @@ class TimetableData():
                     if classroom not in app.timetable['classrooms']:
                         app.timetable['classrooms'].append(classroom)
         return app.timetable['classrooms']
+
+    def get_week_days(self):
+        days = ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"]
+        week = {}
+        for x in range(1, 8):
+            week[x] = days[x-1]
+        return week

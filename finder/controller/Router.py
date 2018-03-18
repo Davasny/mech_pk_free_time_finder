@@ -14,3 +14,4 @@ app.add_url_rule('/api/timetable/teachers', view_func=APIHandler.TimetableTeache
 app.add_url_rule('/api/timetable/groups', view_func=APIHandler.TimetableGroups.as_view('timetable_groups'))
 app.add_url_rule('/api/timetable/subjects', view_func=APIHandler.TimetableSubjects.as_view('timetable_subjects'))
 app.add_url_rule('/api/timetable/classrooms', view_func=APIHandler.TimetableClassrooms.as_view('timetable_classrooms'))
+app.add_url_rule('/api/timetable/weekdays', view_func=APIHandler.TimetableWeekDays.as_view('api_timetable_weekdays'))
