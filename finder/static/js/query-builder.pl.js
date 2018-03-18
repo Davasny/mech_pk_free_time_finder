@@ -25,8 +25,8 @@ QueryBuilder.regional['pl'] = {
   "delete_rule": "Usuń",
   "delete_group": "Usuń",
   "conditions": {
-    "AND": "ORAZ",
-    "OR": "LUB"
+    "AND": "KAŻDY",
+    "OR": "KTÓRYKOLWIEK"
   },
   "operators": {
     "equal": "równa się",
