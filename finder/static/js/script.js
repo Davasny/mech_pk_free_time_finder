@@ -69,7 +69,7 @@ $(document).ready(function(){
 
 
     var rules_basic = {
-       "condition":"AND",
+       "condition":"OR",
        "rules":[
           {
              "id":"teacher",
@@ -105,19 +105,6 @@ $(document).ready(function(){
                    "input":"text",
                    "operator":"equal",
                    "value":"11A3"
-                }
-             ]
-          },
-          {
-             "condition":"AND",
-             "rules":[
-                {
-                   "id":"classroom",
-                   "field":"classroom",
-                   "type":"string",
-                   "input":"text",
-                   "operator":"equal",
-                   "value":"A123"
                 }
              ]
           }
@@ -193,7 +180,7 @@ $(document).ready(function(){
                 valueSetter: function(rule, value) {
                     rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
                 },
-                operators: ['equal', 'not_equal', 'in', 'not_in']
+                operators: ['equal', 'not_equal']
             },
             {
                 id: 'classroom',
@@ -311,10 +298,34 @@ $(document).ready(function(){
         rules: rules_basic
     });
 
-    $("#send_query").click(function() {
-        var filter_query = $('#builder').queryBuilder('getMongo');
-        $("#week_view").load("/filter?filter=" + JSON.stringify(filter_query), function() {});
+
+    sessionStorage.last_event_time = 0.0;
+    $('#builder').on(`
+            afterUpdateGroupCondition.queryBuilder
+            afterUpdateRuleFilter.queryBuilder
+            afterUpdateRuleOperator.queryBuilder
+            afterUpdateRuleValue.queryBuilder
+            afterDeleteGroup.queryBuilder
+            afterDeleteRule.queryBuilder
+            afterAddRule.queryBuilder
+            `, function () {
+                var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
+                var diff = timeStampInMs - sessionStorage.last_event_time;
+
+                if (diff > 30){
+                    send_query();
+                    sessionStorage.last_event_time = timeStampInMs;
+                }
     });
+
+    $("#send_query").click(function() {
+        send_query();
+    });
+
+    function send_query(){
+        var filter_query = $('#builder').queryBuilder('getMongo');
+        $("#week_view").load("/filter?filter=" + encodeURIComponent(JSON.stringify(filter_query, null)), function() {});
+    }
 
     function show_error(message){
         console.log(message);
@@ -326,4 +337,6 @@ $(document).ready(function(){
         $("#filter_error").css("visibility", "hidden")
         $("#filter_error").text("");
     }
+
+    send_query(); // run after page load
 });
