@@ -171,7 +171,7 @@ $(document).ready(function(){
                         JSON.parse(sessionStorage.teachers_data).forEach(function(item) {
                             var tmp = {};
                             tmp['id'] = item;
-                            tmp['name'] = item;
+                            tmp['name'] = item.split(".")[1] + " " + item.split(".")[0] + ".";
                             that.addOption(tmp);
                         });
 
