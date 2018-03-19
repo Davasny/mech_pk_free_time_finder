@@ -151,7 +151,7 @@ $(document).ready(function(){
                 valueSetter: function(rule, value) {
                     rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
                 },
-                operators: ['equal', 'not_equal', 'in', 'not_in']
+                operators: ['equal', 'not_equal']
             },
             {
                 id: 'teacher',
@@ -263,7 +263,7 @@ $(document).ready(function(){
                 valueSetter: function(rule, value) {
                     rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
                 },
-                operators: ['equal', 'not_equal', 'in', 'not_in']
+                operators: ['equal', 'not_equal']
             },
             {
                 id: 'day',
@@ -292,7 +292,7 @@ $(document).ready(function(){
                 valueSetter: function(rule, value) {
                     rule.$el.find('.rule-value-container input')[0].selectize.setValue(value);
                 },
-                operators: ['equal', 'not_equal', 'in', 'not_in']
+                operators: ['equal', 'not_equal']
             }
         ],
         rules: rules_basic
