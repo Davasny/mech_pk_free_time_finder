@@ -64,19 +64,25 @@ class TimetableParser:
 
                 timetable_by_day[day_num][hour] = []
 
+                add_to_timetable_by_day = False
                 for lesson in lessons_to_append:
                     if lesson['teacher'] is not None:
                         if week in lesson['teacher']:
                             lesson['teacher'] = re.sub("(-p.*)|(-n.*)", "", lesson['teacher'])
+                            add_to_timetable_by_day = True
 
                     if lesson['classroom'] is not None:
                         if week in lesson['classroom']:
                             lesson['classroom'] = re.sub("(-p.*)|(-n.*)", "", lesson['classroom'])
+                            add_to_timetable_by_day = True
 
                     if lesson['subject'] is not None:
                         if week in lesson['subject']:
                             lesson['subject'] = re.sub("(-p.*)|(-n.*)", "", lesson['subject'])
+                            add_to_timetable_by_day = True
+                        elif re.match("^(WF)", lesson['subject']):
+                            add_to_timetable_by_day = True
 
-                    timetable_by_day[day_num][hour].append(lesson)
-
+                    if add_to_timetable_by_day:
+                        timetable_by_day[day_num][hour].append(lesson)
         return timetable_by_day
