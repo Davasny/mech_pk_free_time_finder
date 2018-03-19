@@ -24,6 +24,8 @@ class OptivumScraper:
         with open('timetable.json', 'w', encoding="utf-8") as file:
             json.dump(new_timetable, file, ensure_ascii=False)
 
+        logger.info("Timetable updated")
+
     def get_soup(self, url):
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) '
